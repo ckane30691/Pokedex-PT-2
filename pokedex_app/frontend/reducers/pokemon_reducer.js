@@ -30,7 +30,7 @@ const allPokemonReducer = (state={}, action) => {
     case RECEIVE_ALL_POKEMON:
       newState = merge({}, action.pokemon);
       return newState;
-      case RECEIVE_POKEMON:
+    case RECEIVE_POKEMON:
       newState = merge({}, state);
       newState[action.pokemon.id] = action.pokemon;
       return newState;
