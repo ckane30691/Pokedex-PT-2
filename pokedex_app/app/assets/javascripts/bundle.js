@@ -24937,6 +24937,10 @@ var allPokemonReducer = function allPokemonReducer() {
     case _pokemon_actions.RECEIVE_ALL_POKEMON:
       newState = (0, _merge2.default)({}, action.pokemon);
       return newState;
+    case _pokemon_actions.RECEIVE_POKEMON:
+      newState = (0, _merge2.default)({}, state);
+      newState[action.pokemon.id] = action.pokemon;
+      return newState;
     default:
       return state;
   }
@@ -24961,24 +24965,7 @@ var allPokemonReducer = function allPokemonReducer() {
 
 // export default pokemonReducer;
 
-var currPokemonReducer = function currPokemonReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var action = arguments[1];
-
-  var newState = void 0;
-  switch (action.type) {
-    case _pokemon_actions.RECEIVE_POKEMON:
-      newState = action.pokemon;
-      return newState;
-    default:
-      return state;
-  }
-};
-
-var pokemonReducer = (0, _redux.combineReducers)({ allPokemon: allPokemonReducer,
-  currPokemon: currPokemonReducer });
-
-exports.default = pokemonReducer;
+exports.default = allPokemonReducer;
 
 /***/ }),
 /* 246 */
@@ -28105,13 +28092,12 @@ var PokemonIndex = function (_React$Component) {
     key: 'componentWillMount',
     value: function componentWillMount() {
       this.props.requestAllPokemon();
-      // this.props.requestPokemon(1);
     }
   }, {
     key: 'render',
     value: function render() {
       console.log(this.props.pokemon);
-      var allPokemon = this.props.pokemon.allPokemon.map(function (poke) {
+      var allPokemon = this.props.pokemon.map(function (poke) {
         return _react2.default.createElement(_pokemon_index_item2.default, { key: poke.id, pokemon: poke });
       });
       return _react2.default.createElement(

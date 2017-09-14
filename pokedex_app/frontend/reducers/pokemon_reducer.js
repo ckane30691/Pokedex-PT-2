@@ -30,26 +30,13 @@ const allPokemonReducer = (state={}, action) => {
     case RECEIVE_ALL_POKEMON:
       newState = merge({}, action.pokemon);
       return newState;
-    default:
-      return state;
-  }
-};
-
-
-const currPokemonReducer = (state={}, action) => {
-  let newState;
-  switch (action.type) {
-    case RECEIVE_POKEMON:
-      newState = action.pokemon;
+      case RECEIVE_POKEMON:
+      newState = merge({}, state);
+      newState[action.pokemon.id] = action.pokemon;
       return newState;
     default:
       return state;
   }
 };
 
-const pokemonReducer = combineReducers(
-  {allPokemon: allPokemonReducer,
-    currPokemon: currPokemonReducer}
-);
-
-export default pokemonReducer;
+export default allPokemonReducer;
