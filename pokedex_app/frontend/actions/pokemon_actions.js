@@ -9,9 +9,9 @@ export const receiveAllPokemon = pokemon => ({
   pokemon
 });
 
-export const receivePokemon = pokemon => ({
+export const receivePokemon = pokeItems => ({
   type: RECEIVE_POKEMON,
-  pokemon: pokemon
+  pokeItems: pokeItems
 });
 
 export const requestAllPokemon = () => (dispatch) => (
@@ -21,7 +21,7 @@ export const requestAllPokemon = () => (dispatch) => (
 
 export const requestPokemon = (pokemonId) => (dispatch) => {
   APIUtil.fetchPokemon(pokemonId)
-    .then(pokemonHash => dispatch(receivePokemon(pokemonHash.pokemon)));
-  APIUtil.fetchPokemon(pokemonId)
-    .then(pokemonHash => dispatch(receiveItems(pokemonHash.items)));
+    .then(pokeItems => dispatch(receivePokemon(pokeItems)));
+  // APIUtil.fetchPokemon(pokemonId)
+  //   .then(pokemonHash => dispatch(receiveItems(pokemonHash.items)));
 };

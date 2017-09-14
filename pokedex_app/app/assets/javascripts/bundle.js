@@ -11226,10 +11226,10 @@ var receiveAllPokemon = exports.receiveAllPokemon = function receiveAllPokemon(p
   };
 };
 
-var receivePokemon = exports.receivePokemon = function receivePokemon(pokemon) {
+var receivePokemon = exports.receivePokemon = function receivePokemon(pokeItems) {
   return {
     type: RECEIVE_POKEMON,
-    pokemon: pokemon
+    pokeItems: pokeItems
   };
 };
 
@@ -11243,12 +11243,11 @@ var requestAllPokemon = exports.requestAllPokemon = function requestAllPokemon()
 
 var requestPokemon = exports.requestPokemon = function requestPokemon(pokemonId) {
   return function (dispatch) {
-    APIUtil.fetchPokemon(pokemonId).then(function (pokemonHash) {
-      return dispatch(receivePokemon(pokemonHash.pokemon));
+    APIUtil.fetchPokemon(pokemonId).then(function (pokeItems) {
+      return dispatch(receivePokemon(pokeItems));
     });
-    APIUtil.fetchPokemon(pokemonId).then(function (pokemonHash) {
-      return dispatch((0, _item_actions.receiveItems)(pokemonHash.items));
-    });
+    // APIUtil.fetchPokemon(pokemonId)
+    //   .then(pokemonHash => dispatch(receiveItems(pokemonHash.items)));
   };
 };
 
@@ -24949,7 +24948,7 @@ var allPokemonReducer = function allPokemonReducer() {
       return newState;
     case _pokemon_actions.RECEIVE_POKEMON:
       newState = (0, _merge2.default)({}, state);
-      newState[action.pokemon.id] = action.pokemon;
+      newState[action.pokeItems.pokemon.id] = action.pokeItems.pokemon;
       return newState;
     default:
       return state;
@@ -32494,19 +32493,13 @@ exports.default = PokemonDetail;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// export const RECEIVE_ITEMS = 'RECEIVE_ITEMS';
+//
+// export const receiveItems = (items) => ({
+//   type: RECEIVE_ITEMS,
+//   items: items
+// });
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var RECEIVE_ITEMS = exports.RECEIVE_ITEMS = 'RECEIVE_ITEMS';
-
-var receiveItems = exports.receiveItems = function receiveItems(items) {
-  return {
-    type: RECEIVE_ITEMS,
-    items: items
-  };
-};
 
 /***/ }),
 /* 378 */
@@ -32519,7 +32512,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _item_actions = __webpack_require__(377);
+var _pokemon_actions = __webpack_require__(105);
 
 var itemsReducer = function itemsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -32527,13 +32520,12 @@ var itemsReducer = function itemsReducer() {
 
 
   switch (action.type) {
-    case _item_actions.RECEIVE_ITEMS:
-      return action.items;
+    case _pokemon_actions.RECEIVE_POKEMON:
+      return action.pokeItems.items;
     default:
       return state;
   }
-};
-
+}; // import { RECEIVE_ITEMS } from '../actions/item_actions';
 exports.default = itemsReducer;
 
 /***/ })
