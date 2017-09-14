@@ -1,7 +1,15 @@
 import React from 'react';
 
-const PokemonDetail = (props) => (
-  <div></div>
-);
+class PokemonDetail extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    return (
+      <div>{this.props.match.params.pokemonId}</div>
+    );
+  }
+}
 
 export default PokemonDetail;
